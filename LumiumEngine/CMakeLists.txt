@@ -4,7 +4,41 @@
 cmake_minimum_required (VERSION 3.8)
 # project(LumiumEngine) // this is technically LumiumEngine anyways, so we don't need to redefine it
 
+if(WIN32)
+	set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
+endif()
+
+set(CMAKE_DEBUG_POSTFIX "-d")
+set(LUMI_DIR "LumiumEngine")
+
+# find OpenGL
+find_package(OpenGL REQUIRED)
+
 # SDL2
 find_package(SDL2 CONFIG REQUIRED)
 
-# compile glad
+add_library(${PROJECT_NAME} SHARED 
+"${LUMI_DIR}/System/Shader.hpp" "${LUMI_DIR}/System/Shader.cpp"
+"${LUMI_DIR}/System/Window.hpp" "${LUMI_DIR}/System/Window.cpp"
+)
+
+# glad
+set(GLAD_DIR "${CMAKE_HOME_DIRECTORY}/external/glad")
+add_library("glad" "${GLAD_DIR}/src/glad.c")
+target_include_directories("glad" PUBLIC "${GLAD_DIR}/include")
+
+target_include_directories(${PROJECT_NAME} PUBLIC "${SDL2_INCLUDE_DIRS}" "${GLAD_DIR}/include" "${CMAKE_HOME_DIRECTORY}/external/glm/include")
+target_link_libraries(${PROJECT_NAME} PUBLIC "${OPENGL_LIBRARIES}" SDL2::SDL2 SDL2::SDL2main "glad" "${CMAKE_DL_LIBS}")
+
+set_target_properties(${PROJECT_NAME} PROPERTIES
+	ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_HOME_DIRECTORY}/${PROJECT_NAME}/lib"
+	RUNTIME_OUTPUT_DIRECTORY "${CMAKE_HOME_DIRECTORY}/${PROJECT_NAME}/bin"
+)
+
+install(DIRECTORY bin 
+	DESTINATION "${CMAKE_HOME_DIRECTORY}/Lumin"
+	FILES_MATCHING
+	PATTERN "*.dll"
+	PATTERN "*.ilk" EXCLUDE
+	PATTERN "*.pdb" EXCLUDE
+	)

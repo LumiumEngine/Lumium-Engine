@@ -6,3 +6,5 @@ project ("LumiumEngine")
 
 # Include sub-projects.
 add_subdirectory ("LumiumEngine")
+add_subdirectory ("Lumin")
+add_dependencies(Lumin LumiumEngine)
