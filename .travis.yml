@@ -4,7 +4,7 @@ compiler:
   - clang
 
 sudo: enabled
-dist: precise
+dist: trusty
 
 before_install:
   - sudo apt-get update -qq
