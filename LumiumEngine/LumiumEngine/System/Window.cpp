@@ -103,13 +103,18 @@ bool lumi::Window::createWindow(std::string title, int xPos, int yPos, int width
 		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
 	}
 
-	m_shouldClose = false;
+	m_shouldClose = false; 
 	return true;
 }
 
 bool lumi::Window::isOpen()
 {
 	return !m_shouldClose;
+}
+
+bool lumi::Window::pollEvents(SDL_Event * event)
+{
+	return static_cast<bool>(SDL_PollEvent(event));
 }
 
 void lumi::Window::closeWindow()
