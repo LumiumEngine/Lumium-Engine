@@ -16,9 +16,6 @@ before_install:
   - sudo make install
   
 before_script:
-  - mkdir build
-  - cd build
+  - mkdir builder
+  - cd builder
   - cmake ..
-
-script:
- - cmake --build .
