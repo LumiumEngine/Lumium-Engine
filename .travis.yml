@@ -3,6 +3,8 @@ language: cpp
 sudo: enabled
 dist: trusty
 
+os: linux
+
 compiler:
   - gcc
   - clang
