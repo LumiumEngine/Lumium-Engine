@@ -7,8 +7,13 @@ sudo: enabled
 dist: trusty
 
 before_install:
-  - sudo apt-get update -qq
-  - sudo apt-get install libsdl2-2.0
+  - mkdir sdl2install
+  - wget https://www.libsdl.org/release/SDL2-2.0.0.tar.gz
+  - tar xf SDL2-2.0.0.tar.gz
+  - cd SDL2-2.0.0
+  - ./configure
+  - make
+  - sudo make install
   
 before_script:
   - mkdir build
