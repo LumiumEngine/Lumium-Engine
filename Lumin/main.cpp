@@ -25,7 +25,7 @@
 				SDL_Event * event;
 				while (window.pollEvents(event))
 				{
-					if()
+					
 				}
 				glClear(GL_COLOR_BUFFER_BIT);
 				glBindVertexArray(vao);
