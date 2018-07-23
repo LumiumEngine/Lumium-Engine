@@ -2,24 +2,22 @@
 
 lumi::InputManager::InputManager()
 {
-	m_pCurrentEvent = nullptr;
 }
 
 lumi::InputManager::~InputManager()
 {
-	m_pCurrentEvent = nullptr;
 }
 
-void lumi::InputManager::setEvent(SDL_Event * event)
+bool lumi::InputManager::getEvent()
 {
-	m_pCurrentEvent = event;
+	return static_cast<bool>(SDL_PollEvent(&m_pCurrentEvent));
 }
 
 bool lumi::InputManager::isKeyPressed(int key)
 {
-	if (m_pCurrentEvent->type == SDL_KEYDOWN)
+	if (m_pCurrentEvent.type == SDL_KEYDOWN)
 	{
-		if (m_pCurrentEvent->key.keysym.sym == key)
+		if (m_pCurrentEvent.key.keysym.sym == key)
 		{
 			return true;
 		}
@@ -29,9 +27,9 @@ bool lumi::InputManager::isKeyPressed(int key)
 
 bool lumi::InputManager::isMousePressed(int button)
 {
-	if (m_pCurrentEvent->type == SDL_MOUSEBUTTONDOWN)
+	if (m_pCurrentEvent.type == SDL_MOUSEBUTTONDOWN)
 	{
-		if (m_pCurrentEvent->button.button == button)
+		if (m_pCurrentEvent.button.button == button)
 		{
 			return true;
 		}
