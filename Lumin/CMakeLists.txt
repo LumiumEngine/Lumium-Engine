@@ -1,7 +1,7 @@
 # CMakeList.txt : CMake project for LumiumEngine, include source and define
 # project specific logic here.
 #
-cmake_minimum_required (VERSION 3.11)
+cmake_minimum_required (VERSION 3.9)
 project(Lumin)
 
 set(CMAKE_DEBUG_POSTFIX "-d")
