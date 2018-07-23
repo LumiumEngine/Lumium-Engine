@@ -4,11 +4,11 @@ namespace lumi
 {
 	namespace graphics
 	{
-		class Buffer
+		class Buffers
 		{
 		public:
-			Buffer();
-			~Buffer();
+			Buffers();
+			~Buffers();
 		private:
 
 		};

@@ -2,9 +2,9 @@
 # and include sub-projects here.
 cmake_minimum_required (VERSION 3.9)
 
-project ("LumiumEngine")
+project ("Lumi")
 
 # Include sub-projects.
 add_subdirectory ("LumiumEngine")
 add_subdirectory ("Lumin")
-add_dependencies(Lumin LumiumEngine)
+add_dependencies("Lumin" "LumiumEngine")

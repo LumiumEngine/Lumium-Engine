@@ -2,7 +2,7 @@
 # project specific logic here.
 #
 cmake_minimum_required (VERSION 3.9)
-# project(LumiumEngine) // this is technically LumiumEngine anyways, so we don't need to redefine it
+project(LumiumEngine)
 
 if(WIN32)
 	set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
