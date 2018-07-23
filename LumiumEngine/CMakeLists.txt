@@ -20,7 +20,7 @@ find_package(OpenGL REQUIRED)
 find_package(SDL2 CONFIG REQUIRED)
 
 add_library(${PROJECT_NAME} SHARED 
-"${LUMI_DIR}/System/Shader.hpp" "${LUMI_DIR}/System/Shader.cpp"
+"${LUMI_DIR}/System/Shaders.hpp" "${LUMI_DIR}/System/Shaders.cpp"
 "${LUMI_DIR}/System/Window.hpp" "${LUMI_DIR}/System/Window.cpp"
 "${LUMI_DIR}/System/InputManager.hpp" "${LUMI_DIR}/System/InputManager.cpp"
 )
