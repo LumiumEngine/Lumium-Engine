@@ -21,10 +21,12 @@ before_install:
   - ../configure
   - make
   - sudo make install
+  - cd ..
+  - cd ..
 
 before_script:
-  - mkdir builder
-  - cd builder
+  - mkdir build
+  - cd build
   - cmake ..
 
 script:
