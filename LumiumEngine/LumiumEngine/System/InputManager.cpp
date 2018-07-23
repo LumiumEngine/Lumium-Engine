@@ -1,19 +1,19 @@
 #include "InputManager.hpp"
 
-lumi::InputManager::InputManager()
+lumi::system::InputManager::InputManager()
 {
 }
 
-lumi::InputManager::~InputManager()
+lumi::system::InputManager::~InputManager()
 {
 }
 
-bool lumi::InputManager::getEvent()
+bool lumi::system::InputManager::getEvent()
 {
 	return static_cast<bool>(SDL_PollEvent(&m_pCurrentEvent));
 }
 
-bool lumi::InputManager::isKeyPressed(int key)
+bool lumi::system::InputManager::isKeyPressed(int key)
 {
 	if (m_pCurrentEvent.type == SDL_KEYDOWN)
 	{
@@ -25,7 +25,7 @@ bool lumi::InputManager::isKeyPressed(int key)
 	return false;
 }
 
-bool lumi::InputManager::isMousePressed(int button)
+bool lumi::system::InputManager::isMousePressed(int button)
 {
 	if (m_pCurrentEvent.type == SDL_MOUSEBUTTONDOWN)
 	{
