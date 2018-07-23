@@ -1,7 +1,7 @@
 ﻿# CMakeList.txt : CMake project for LumiumEngine, include source and define
 # project specific logic here.
 #
-cmake_minimum_required (VERSION 3.8)
+cmake_minimum_required (VERSION 3.11)
 # project(LumiumEngine) // this is technically LumiumEngine anyways, so we don't need to redefine it
 
 if(WIN32)
@@ -22,6 +22,7 @@ add_library(${PROJECT_NAME} SHARED
 "${LUMI_DIR}/System/Window.hpp" "${LUMI_DIR}/System/Window.cpp"
 "${LUMI_DIR}/System/InputManager.hpp" "${LUMI_DIR}/System/InputManager.cpp"
 )
+target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
 
 # glad
 set(GLAD_DIR "${CMAKE_HOME_DIRECTORY}/external/glad")

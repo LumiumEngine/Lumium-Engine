@@ -22,8 +22,8 @@
 			glVertexArrayAttribBinding(vao, 0, 0);
 			while (window.isOpen())
 			{
-				SDL_Event * event;
-				while (window.pollEvents(event))
+				SDL_Event event;
+				while (window.pollEvents(&event))
 				{
 					
 				}
