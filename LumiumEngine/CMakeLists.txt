@@ -1,7 +1,7 @@
 ﻿# CMakeList.txt : CMake project for LumiumEngine, include source and define
 # project specific logic here.
 #
-cmake_minimum_required (VERSION 3.11)
+cmake_minimum_required (VERSION 3.9)
 # project(LumiumEngine) // this is technically LumiumEngine anyways, so we don't need to redefine it
 
 if(WIN32)
