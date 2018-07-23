@@ -112,11 +112,6 @@ bool lumi::Window::isOpen()
 	return !m_shouldClose;
 }
 
-bool lumi::Window::pollEvents(SDL_Event * event)
-{
-	return static_cast<bool>(SDL_PollEvent(event));
-}
-
 void lumi::Window::closeWindow()
 {
 	m_shouldClose = true;

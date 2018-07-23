@@ -13,7 +13,6 @@ namespace lumi
 
 		bool createWindow(std::string title, int xPos, int yPos, int width, int height, unsigned int flags);
 		bool isOpen();
-		bool pollEvents(SDL_Event * event);
 		void closeWindow();
 		void display();
 	private:
