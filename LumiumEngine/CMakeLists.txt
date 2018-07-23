@@ -29,7 +29,12 @@ add_library("glad" "${GLAD_DIR}/src/glad.c")
 target_include_directories("glad" PUBLIC "${GLAD_DIR}/include")
 
 target_include_directories(${PROJECT_NAME} PUBLIC "${SDL2_INCLUDE_DIRS}" "${GLAD_DIR}/include" "${CMAKE_HOME_DIRECTORY}/external/glm/include")
-target_link_libraries(${PROJECT_NAME} PUBLIC "${OPENGL_LIBRARIES}" SDL2::SDL2 SDL2::SDL2main "glad" "${CMAKE_DL_LIBS}")
+if(WIN32)
+	target_link_libraries(${PROJECT_NAME} PUBLIC "${OPENGL_LIBRARIES}" SDL2::SDL2 SDL2::SDL2main "glad" "${CMAKE_DL_LIBS}")
+else()
+	target_link_libraries(${PROJECT_NAME} PUBLIC "${OPENGL_LIBRARIES}" SDL2 SDL2main "glad" "${CMAKE_DL_LIBS}")
+endif()
+
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
 	ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_HOME_DIRECTORY}/${PROJECT_NAME}/lib"
