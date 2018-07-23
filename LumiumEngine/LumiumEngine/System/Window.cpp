@@ -43,17 +43,17 @@ void  APIENTRY glDebugOutput(GLenum source, GLenum type, GLuint id, GLenum sever
 	std::cout << std::endl;
 }
 
-lumi::Window::Window()
+lumi::system::Window::Window()
 {
 	m_shouldClose = true;
 }
 
-lumi::Window::~Window()
+lumi::system::Window::~Window()
 {
 	SDL_Quit();
 }
 
-bool lumi::Window::createWindow(std::string title, int xPos, int yPos, int width, int height, unsigned int flags)
+bool lumi::system::Window::createWindow(std::string title, int xPos, int yPos, int width, int height, unsigned int flags)
 {
 	// Set SDL as ready and init SDL
 	SDL_SetMainReady();
@@ -66,11 +66,13 @@ bool lumi::Window::createWindow(std::string title, int xPos, int yPos, int width
 
 	SDL_GL_LoadLibrary(NULL); // Default OpenGL is fine.
 
-	// Request an OpenGL 4.5 context (should be core)
-	SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
+	// Request an OpenGL 4.5 context
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 5);
-	// Also request a depth buffer
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_DEBUG_FLAG);
+	// hardware accel, double buffer, and depth size
+	SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 
@@ -91,33 +93,35 @@ bool lumi::Window::createWindow(std::string title, int xPos, int yPos, int width
 		SDL_Quit();
 		return false;
 	}
+
 	gladLoadGLLoader(SDL_GL_GetProcAddress);
 
 	GLint glFlags;
 	glGetIntegerv(GL_CONTEXT_FLAGS, &glFlags);
-	if (flags & GL_CONTEXT_FLAG_DEBUG_BIT)
+	if (glFlags & GL_CONTEXT_FLAG_DEBUG_BIT)
 	{
 		glEnable(GL_DEBUG_OUTPUT);
 		glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
 		glDebugMessageCallback(glDebugOutput, nullptr);
 		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
+		std::cout << "Debug mode enabled" << std::endl;
 	}
 
 	m_shouldClose = false; 
 	return true;
 }
 
-bool lumi::Window::isOpen()
+bool lumi::system::Window::isOpen()
 {
 	return !m_shouldClose;
 }
 
-void lumi::Window::closeWindow()
+void lumi::system::Window::closeWindow()
 {
 	m_shouldClose = true;
 }
 
-void lumi::Window::display()
+void lumi::system::Window::display()
 {
 	SDL_GL_SwapWindow(m_pWindow);
 }
