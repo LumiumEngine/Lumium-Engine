@@ -23,6 +23,8 @@ before_install:
   - sudo make install
   - cd ..
   - cd ..
+  - sudo apt-get update
+  - sudo apt-get upgrade
 
 before_script:
   - mkdir build
