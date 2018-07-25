@@ -12,7 +12,8 @@ namespace lumi
 		public:
 			Buffers();
 			~Buffers();
-			void createBuffers(std::vector<lumi::graphics::Vertex> data, int flags = GL_DYNAMIC_STORAGE_BIT);
+			void createVertexBuffers(std::vector<lumi::graphics::Vertex> data, int flags = GL_DYNAMIC_STORAGE_BIT);
+			void createElementBuffer(std::vector<GLushort> indices, int flags = GL_DYNAMIC_STORAGE_BIT);
 			void bindBuffers();
 			void unbindBuffers();
 
