@@ -13,6 +13,7 @@ namespace lumi
 
 			// Gets the next event in the event queue, if there are no more events then this returns false
 			bool getEvent();
+			bool eventTriggered(unsigned int type);
 			bool isKeyPressed(int key);
 			bool isMousePressed(int button);
 		private:
