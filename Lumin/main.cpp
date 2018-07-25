@@ -4,7 +4,6 @@
 #include <LumiumEngine/Graphics/Vertex.hpp>
 #include <LumiumEngine/System/InputManager.hpp>
 #include <LumiumEngine/System/Window.hpp>
-
 #include <iostream>
 #include <vector>
 
@@ -24,7 +23,7 @@ int main(int argc, char **argv)
 			glm::vec3(-1,  1,  1),
 			glm::vec3( 1,  1,  1),
 			glm::vec3(-1, -1,  1),
-			glm::vec3(-1,  1,  1)
+			glm::vec3( 1, -1,  1)
 		};
 		for (int i = 0; i < 4; i++)
 		{
@@ -33,7 +32,8 @@ int main(int argc, char **argv)
 			vertices.push_back(vert);
 		}
 		lumi::graphics::Buffers buffer;
-		buffer.createBuffers(vertices);
+		buffer.createVertexBuffers(vertices);
+		buffer.createElementBuffer({0, 1, 2, 1, 2, 3});
 
 		lumi::system::InputManager iManager;
 		SDL_Event event;
@@ -41,12 +41,12 @@ int main(int argc, char **argv)
 		{
 			while (iManager.getEvent())
 			{
-				if (iManager.isKeyPressed(SDLK_ESCAPE))
+				if (iManager.eventTriggered(SDL_QUIT) || iManager.isKeyPressed(SDLK_ESCAPE))
 					window.closeWindow();
 			}
 			glClear(GL_COLOR_BUFFER_BIT);
 			buffer.bindBuffers();
-			glDrawArrays(GL_TRIANGLES, 0, 3);
+			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
 			buffer.unbindBuffers();
 			window.display();
 		}
