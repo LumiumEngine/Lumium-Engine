@@ -28,8 +28,11 @@ void lumi::graphics::Buffers::createVertexBuffers(std::vector<lumi::graphics::Ve
 
 	glVertexArrayVertexBuffer(m_vao, 0, m_vbo, 0, sizeof(lumi::graphics::Vertex));
 	glEnableVertexArrayAttrib(m_vao, 0); // vao, index
+	glEnableVertexArrayAttrib(m_vao, 1); // vao, index
 	glVertexArrayAttribFormat(m_vao, 0, 3, GL_FLOAT, GL_FALSE, offsetof(lumi::graphics::Vertex, Position));
+	glVertexArrayAttribFormat(m_vao, 1, 2, GL_FLOAT, GL_FALSE, offsetof(lumi::graphics::Vertex, TexCoord));
 	glVertexArrayAttribBinding(m_vao, 0, 0);
+	glVertexArrayAttribBinding(m_vao, 1, 0);
 }
 
 void lumi::graphics::Buffers::createElementBuffer(std::vector<GLushort> indices, int flags)
