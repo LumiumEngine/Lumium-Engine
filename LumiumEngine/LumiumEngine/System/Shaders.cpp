@@ -1,6 +1,5 @@
 #include "Shaders.hpp"
 #include <fstream>
-#include <iostream>
 
 lumi::system::Shaders::Shaders()
 {
