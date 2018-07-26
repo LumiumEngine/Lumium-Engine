@@ -1,9 +1,12 @@
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 #include <LumiumEngine/Graphics/Buffers.hpp>
+#include <LumiumEngine/Graphics/Texture.hpp>
 #include <LumiumEngine/Graphics/Vertex.hpp>
 #include <LumiumEngine/System/InputManager.hpp>
+#include <LumiumEngine/System/Shaders.hpp>
 #include <LumiumEngine/System/Window.hpp>
+
 #include <iostream>
 #include <vector>
 
@@ -20,20 +23,38 @@ int main(int argc, char **argv)
 
 		glm::vec3 verticies[] = 
 		{
-			glm::vec3(-1,  1,  1),
-			glm::vec3( 1,  1,  1),
-			glm::vec3(-1, -1,  1),
-			glm::vec3( 1, -1,  1)
+			glm::vec3(-0.5,  0.5,  1),
+			glm::vec3( 0.5,  0.5,  1),
+			glm::vec3(-0.5, -0.5,  1),
+			glm::vec3( 0.5, -0.5,  1)
 		};
+
+		glm::vec2 uvs[] =
+		{
+			glm::vec2(0, 1),	// top left
+			glm::vec2(1, 1),	// top right
+			glm::vec2(0, 0),	// bottom left
+			glm::vec2(1, 0)		// bottom right
+		};
+
 		for (int i = 0; i < 4; i++)
 		{
 			lumi::graphics::Vertex vert;
 			vert.Position = verticies[i];
+			vert.TexCoord = uvs[i];
 			vertices.push_back(vert);
 		}
 		lumi::graphics::Buffers buffer;
 		buffer.createVertexBuffers(vertices);
 		buffer.createElementBuffer({0, 1, 2, 1, 2, 3});
+
+		lumi::system::Shaders shaders;
+		shaders.addShader("Shaders/test.vert", GL_VERTEX_SHADER);
+		shaders.addShader("Shaders/test.frag", GL_FRAGMENT_SHADER);
+		shaders.compileProgram();
+
+		lumi::graphics::Texture texture;
+		texture.createTexture("Images/test.png");
 
 		lumi::system::InputManager iManager;
 		SDL_Event event;
@@ -44,11 +65,16 @@ int main(int argc, char **argv)
 				if (iManager.eventTriggered(SDL_QUIT) || iManager.isKeyPressed(SDLK_ESCAPE))
 					window.closeWindow();
 			}
-			glClear(GL_COLOR_BUFFER_BIT);
+			shaders.useProgram();
+			texture.bindTexture();
+			// draw stuff
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			buffer.bindBuffers();
 			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
 			buffer.unbindBuffers();
+			shaders.unuseProgram();
 			window.display();
+			// end draw
 		}
 	}
 	return 1;
