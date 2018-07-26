@@ -19,8 +19,9 @@ find_package(OpenGL REQUIRED)
 # SDL2
 find_package(SDL2 CONFIG REQUIRED)
 
-add_library(${PROJECT_NAME} SHARED 
+add_library(${PROJECT_NAME} SHARED
 "${LUMI_DIR}/Graphics/Buffers.hpp" "${LUMI_DIR}/Graphics/Buffers.cpp"
+"${LUMI_DIR}/Graphics/Texture.hpp" "${LUMI_DIR}/Graphics/Texture.cpp"
 "${LUMI_DIR}/Graphics/Vertex.hpp"
 "${LUMI_DIR}/System/Shaders.hpp" "${LUMI_DIR}/System/Shaders.cpp"
 "${LUMI_DIR}/System/Window.hpp" "${LUMI_DIR}/System/Window.cpp"
@@ -33,7 +34,10 @@ set(GLAD_DIR "${CMAKE_HOME_DIRECTORY}/external/glad")
 add_library("glad" "${GLAD_DIR}/src/glad.c")
 target_include_directories("glad" PUBLIC "${GLAD_DIR}/include")
 
-target_include_directories(${PROJECT_NAME} PUBLIC "${SDL2_INCLUDE_DIRS}" "${GLAD_DIR}/include" "${CMAKE_HOME_DIRECTORY}/external/glm/include")
+#stb_image
+set(STB_IMAGE_DIR "${CMAKE_HOME_DIRECTORY}/external/stb/include")
+
+target_include_directories(${PROJECT_NAME} PUBLIC "${SDL2_INCLUDE_DIRS}" "${GLAD_DIR}/include" "${STB_IMAGE_DIR}" "${CMAKE_HOME_DIRECTORY}/external/glm/include")
 if(WIN32)
 	target_link_libraries(${PROJECT_NAME} PUBLIC "${OPENGL_LIBRARIES}" SDL2::SDL2 SDL2::SDL2main "glad" "${CMAKE_DL_LIBS}")
 else()
