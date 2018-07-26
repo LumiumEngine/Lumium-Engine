@@ -32,6 +32,7 @@ target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
 # glad
 set(GLAD_DIR "${CMAKE_HOME_DIRECTORY}/external/glad")
 add_library("glad" "${GLAD_DIR}/src/glad.c")
+set_target_properties("glad" PROPERTIES POSITION_INDEPENDENT_CODE ON)
 target_include_directories("glad" PUBLIC "${GLAD_DIR}/include")
 
 #stb_image

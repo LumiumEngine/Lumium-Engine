@@ -1,6 +1,6 @@
 #pragma once
 #include <glad/glad.h>
-#include <LumiumEngine/Graphics/Vertex.hpp>
+#include "Vertex.hpp"
 #include <vector>
 
 namespace lumi
