@@ -5,8 +5,8 @@
 
 lumi::graphics::TextureParms::TextureParms()
 {
-	minFilter = std::make_pair(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	maxFilter = std::make_pair(GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	minFilter = std::make_pair(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	maxFilter = std::make_pair(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	minLOD = std::make_pair(GL_TEXTURE_MIN_LOD, -1000);
 	maxLOD = std::make_pair(GL_TEXTURE_MAX_LOD, 1000);
 	maxLevel = std::make_pair(GL_TEXTURE_MAX_LEVEL, 1000);
@@ -53,7 +53,7 @@ void lumi::graphics::Texture::createTexture(std::string fileName, TextureType ty
 	int width, height, n;
 	if (type == TextureType::Tx2D)
 	{
-		stbi_set_flip_vertically_on_load(1);
+		stbi_set_flip_vertically_on_load(true);
 		unsigned char * imageData = stbi_load(fileName.c_str(), &width, &height, &n, 4);
 		glTextureStorage2D(m_textureID, 1, GL_RGBA8, width, height);
 		glTextureSubImage2D(m_textureID, 0, 0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, imageData);

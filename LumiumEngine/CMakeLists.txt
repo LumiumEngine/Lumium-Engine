@@ -41,7 +41,7 @@ set(STB_IMAGE_DIR "${CMAKE_HOME_DIRECTORY}/external/stb/include")
 target_include_directories(${PROJECT_NAME} PUBLIC "${SDL2_INCLUDE_DIRS}" "${GLAD_DIR}/include" "${STB_IMAGE_DIR}" "${CMAKE_HOME_DIRECTORY}/external/glm/include")
 if(WIN32)
 	target_link_libraries(${PROJECT_NAME} PUBLIC "${OPENGL_LIBRARIES}" SDL2::SDL2 SDL2::SDL2main "glad" "${CMAKE_DL_LIBS}")
-else()
+elseif(LINUX)
 	target_link_libraries(${PROJECT_NAME} PUBLIC "${OPENGL_LIBRARIES}" SDL2 SDL2main "glad" "${CMAKE_DL_LIBS}")
 endif()
 

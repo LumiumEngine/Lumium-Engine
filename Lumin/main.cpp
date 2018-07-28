@@ -19,7 +19,7 @@ int main(int argc, char **argv)
 
 		std::vector<lumi::graphics::Vertex> vertices;
 
-		glClearColor(.2f, .4f, .6f, 1.0f);
+		glClearColor(.2f, 0.2f, .2f, 1.0f);
 
 		glm::vec3 verticies[] = 
 		{
