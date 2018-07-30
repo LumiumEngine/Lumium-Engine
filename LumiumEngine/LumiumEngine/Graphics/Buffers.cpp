@@ -10,6 +10,9 @@ lumi::graphics::Buffers::Buffers()
 
 lumi::graphics::Buffers::~Buffers()
 {
+	m_vao = 0;
+	m_vbo = 0;
+	m_ebo = 0;
 }
 
 void lumi::graphics::Buffers::createVao()
