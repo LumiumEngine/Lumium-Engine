@@ -49,8 +49,7 @@ void lumi::graphics::Texture::createTexture(std::string fileName, TextureType ty
 	m_textureType = type;
 	glCreateTextures(static_cast<GLenum>(type), 1, &m_textureID);
 	texParms.updateParms(m_textureID);
-
-	int width, height, n;
+	GLint width, height, n;
 	if (type == TextureType::Tx2D)
 	{
 		stbi_set_flip_vertically_on_load(true);
