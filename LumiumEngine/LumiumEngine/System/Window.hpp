@@ -5,7 +5,8 @@
 
 namespace lumi
 {
-	namespace system {
+	namespace system 
+	{
 		class Window
 		{
 		public:

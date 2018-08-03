@@ -46,19 +46,37 @@ lumi::graphics::Texture::~Texture()
 
 void lumi::graphics::Texture::createTexture(std::string fileName, TextureType type, TextureParms texParms)
 {
-	m_textureType = type;
-	glCreateTextures(static_cast<GLenum>(type), 1, &m_textureID);
+}
+
+int lumi::graphics::Texture::createTextureArray(std::string fileName, int width, int height, TextureParms texParms)
+{
+	m_textureType = TextureType::Tx2DArray;
+	glCreateTextures(static_cast<GLenum>(m_textureType), 1, &m_textureID);
 	texParms.updateParms(m_textureID);
-	GLint width, height, n;
-	if (type == TextureType::Tx2D)
+
+	GLint imageWidth, imageHeight, n;
+	GLint depth, levels;
+
+	stbi_set_flip_vertically_on_load(true);
+	unsigned char * imageData = stbi_load(fileName.c_str(), &imageWidth, &imageHeight, &n, 4);
+	depth = (imageWidth / width) * (imageHeight / height);
+	levels = depth - 1;
+
+	glTextureStorage3D(m_textureID, levels, GL_RGBA8, 128, 128, depth);
+	glPixelStorei(GL_UNPACK_ROW_LENGTH, imageWidth);
+	for (int i = 0; i < depth; ++i)
 	{
-		stbi_set_flip_vertically_on_load(true);
-		unsigned char * imageData = stbi_load(fileName.c_str(), &width, &height, &n, 4);
-		glTextureStorage2D(m_textureID, 1, GL_RGBA8, width, height);
-		glTextureSubImage2D(m_textureID, 0, 0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, imageData);
-		stbi_image_free(imageData);
-		glGenerateTextureMipmap(m_textureID);
+		const int xOff = (i % 2) * width;
+		const int yOff = (i / 2 | 0) * height;
+		glPixelStorei(GL_UNPACK_SKIP_PIXELS, xOff);
+		glPixelStorei(GL_UNPACK_SKIP_ROWS, yOff);
+		const int level = 0;
+		glTextureSubImage3D(m_textureID, level, 0, 0, i, 128, 128, 1, GL_RGBA, GL_UNSIGNED_BYTE, imageData);
 	}
+	glGenerateTextureMipmap(m_textureID);
+
+	stbi_image_free(imageData);
+	return depth;
 }
 
 void lumi::graphics::Texture::bindTexture(GLuint activeTexture)

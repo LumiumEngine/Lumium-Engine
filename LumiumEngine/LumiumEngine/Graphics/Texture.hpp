@@ -8,7 +8,7 @@ namespace lumi
 {
 	namespace graphics
 	{
-		enum class TextureType : unsigned int {Tx2D = GL_TEXTURE_2D, Tx3D = GL_TEXTURE_3D, TxCubeMap = GL_TEXTURE_CUBE_MAP};
+		enum class TextureType : unsigned int {Tx2D = GL_TEXTURE_2D, Tx2DArray = GL_TEXTURE_2D_ARRAY, Tx3D = GL_TEXTURE_3D, TxCubeMap = GL_TEXTURE_CUBE_MAP};
 		struct TextureParms
 		{
 		public:
@@ -31,6 +31,8 @@ namespace lumi
 			~Texture();
 
 			void createTexture(std::string fileName, TextureType type = TextureType::Tx2D, TextureParms texParms = TextureParms());
+			// create texture array returns the total count of images added the texture array
+			int createTextureArray(std::string fileName, int width, int height, TextureParms texParms = TextureParms());
 			void bindTexture(GLuint activeTexture = 0);
 			void unbindTexture();
 		private:

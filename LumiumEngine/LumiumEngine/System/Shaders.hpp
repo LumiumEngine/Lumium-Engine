@@ -33,6 +33,7 @@ namespace lumi
         private:
 			GLuint m_iProgramID;
 			std::vector<GLuint> m_shaderIDs;
+			bool m_isBound;
         };
 	}
 }

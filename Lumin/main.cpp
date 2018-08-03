@@ -54,7 +54,8 @@ int main(int argc, char **argv)
 		shaders.compileProgram();
 
 		lumi::graphics::Texture texture;
-		texture.createTexture("Images/test.png");
+		int texCount = texture.createTextureArray("Images/test.png", 128, 128);
+		int currentIndex = 0;
 
 		lumi::system::InputManager iManager;
 		SDL_Event event;
@@ -65,8 +66,10 @@ int main(int argc, char **argv)
 				if (iManager.eventTriggered(SDL_QUIT) || iManager.isKeyPressed(SDLK_ESCAPE))
 					window.closeWindow();
 			}
-			shaders.useProgram();
 			texture.bindTexture();
+			shaders.useProgram();
+			shaders.glUniform(shaders.getUniformLocation("imageIndex"), currentIndex);
+
 			// draw stuff
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			buffer.bindBuffers();
@@ -75,6 +78,10 @@ int main(int argc, char **argv)
 			shaders.unuseProgram();
 			window.display();
 			// end draw
+
+			currentIndex++;
+			if (currentIndex > texCount)
+				currentIndex = 0;
 		}
 	}
 	return 1;

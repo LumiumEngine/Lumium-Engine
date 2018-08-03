@@ -3,12 +3,14 @@
 
 lumi::system::Shaders::Shaders()
 {
+	m_isBound = false;
 	m_shaderIDs.reserve(2);
 	m_iProgramID = 0;
 }
 
 lumi::system::Shaders::~Shaders()
 {
+	m_isBound = false;
 	m_shaderIDs.clear();
 	m_iProgramID = 0;
 }
@@ -73,17 +75,30 @@ void lumi::system::Shaders::compileProgram()
 
 void lumi::system::Shaders::useProgram()
 {
+	m_isBound = true;
 	glUseProgram(m_iProgramID);
 }
 
 void lumi::system::Shaders::unuseProgram()
 {
+	m_isBound = false;
     glUseProgram(0);
 }
 
 GLint lumi::system::Shaders::getUniformLocation(std::string uniformName)
 {
-	return glGetUniformLocation(m_iProgramID, uniformName.c_str());
+	// if program is not bound, force a bind
+	// if a bind is forced then we unbind it
+	bool forcedBind = false;
+	if (!m_isBound)
+	{
+		forcedBind = true;
+		useProgram();
+	}
+	auto location = glGetUniformLocation(m_iProgramID, uniformName.c_str());
+	if (forcedBind)
+		unuseProgram();
+	return location;
 }
 
 void lumi::system::Shaders::glUniform(GLuint location, GLuint data)
