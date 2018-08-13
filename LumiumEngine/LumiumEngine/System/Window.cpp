@@ -46,6 +46,7 @@ void  APIENTRY glDebugOutput(GLenum source, GLenum type, GLuint id, GLenum sever
 lumi::system::Window::Window()
 {
 	m_shouldClose = true;
+	m_fullscreen = false;
 }
 
 lumi::system::Window::~Window()
@@ -124,4 +125,22 @@ void lumi::system::Window::closeWindow()
 void lumi::system::Window::display()
 {
 	SDL_GL_SwapWindow(m_pWindow);
+}
+
+void lumi::system::Window::toggleFullScreen()
+{
+	if(!m_fullscreen)
+		SDL_SetWindowFullscreen(m_pWindow, SDL_WINDOW_FULLSCREEN);
+	else
+		SDL_SetWindowFullscreen(m_pWindow, 0);
+
+	m_fullscreen = !m_fullscreen;
+
+}
+
+glm::vec2 lumi::system::Window::getSize()
+{
+	int width, height;
+	SDL_GetWindowSize(m_pWindow, &width, &height);
+	return glm::vec2(width, height);
 }

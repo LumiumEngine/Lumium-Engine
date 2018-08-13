@@ -21,11 +21,15 @@ find_package(SDL2 CONFIG REQUIRED)
 
 add_library(${PROJECT_NAME} SHARED
 "${LUMI_DIR}/Graphics/Buffers.hpp" "${LUMI_DIR}/Graphics/Buffers.cpp"
+"${LUMI_DIR}/Graphics/Shapes/Cube.hpp" "${LUMI_DIR}/Graphics/Shapes/Cube.cpp"
+"${LUMI_DIR}/Graphics/Drawable.hpp"
 "${LUMI_DIR}/Graphics/Texture.hpp" "${LUMI_DIR}/Graphics/Texture.cpp"
 "${LUMI_DIR}/Graphics/Vertex.hpp"
+"${LUMI_DIR}/System/Camera.hpp" "${LUMI_DIR}/System/Camera.cpp"
+"${LUMI_DIR}/System/EventManager.hpp" "${LUMI_DIR}/System/EventManager.cpp"
 "${LUMI_DIR}/System/Shaders.hpp" "${LUMI_DIR}/System/Shaders.cpp"
+"${LUMI_DIR}/System/Timer.hpp" "${LUMI_DIR}/System/Timer.cpp"
 "${LUMI_DIR}/System/Window.hpp" "${LUMI_DIR}/System/Window.cpp"
-"${LUMI_DIR}/System/InputManager.hpp" "${LUMI_DIR}/System/InputManager.cpp"
 )
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
 

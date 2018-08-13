@@ -6,7 +6,7 @@ project(Lumin)
 
 set(CMAKE_DEBUG_POSTFIX "-d")
 
-add_executable(${PROJECT_NAME} "main.cpp")
+add_executable(${PROJECT_NAME} "main.cpp" "Game.hpp" "Game.cpp")
 
 target_link_libraries(${PROJECT_NAME} PUBLIC LumiumEngine)
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_HOME_DIRECTORY}/LumiumEngine)
