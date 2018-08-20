@@ -13,9 +13,6 @@ namespace lumi
 			Cube();
 			~Cube();
 			void createCube(glm::vec3 pos, int size = 1);
-			std::vector<Vertex> getVertices();
-			std::vector<GLushort> getIndices();
-			glm::mat4& getModel();
 		};
 	}
 }

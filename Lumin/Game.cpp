@@ -18,8 +18,6 @@ Game::~Game()
 
 void Game::start()
 {
-	m_Timer.startTime();
-	m_Timer.setTimeStep(60);
 	if (m_window.createWindow("Lumin", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1920, 1080, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL))
 	{
 		gladLoadGLLoader(SDL_GL_GetProcAddress); // load OpenGL
@@ -46,9 +44,6 @@ void Game::setup()
 
 	m_texture.createTexture("Images/test.png");
 	
-	float radius = 10.0f;
-	float camX = std::sin(m_Timer.getElapsedTime()) * radius;
-	float camZ = std::cos(m_Timer.getElapsedTime()) * radius;
 	m_camera.setCameraCenter(glm::vec3(0, 0, 0));
 	m_camera.setCameraPosition(glm::vec3(0, 0, -2));
 
@@ -58,16 +53,12 @@ void Game::setup()
 
 void Game::run()
 {
+	m_Timer.startTime();
+	m_Timer.setTimeStep(60);
 	while (m_window.isOpen())
 	{
+		m_Timer.sleepCycle();
 		processInput();
-		double frameTime = m_Timer.getTime();
-		while(frameTime > 0.00)
-		{
-			double deltaTime = std::min(frameTime, m_Timer.getTimeStep());
-			update(deltaTime);
-			frameTime -= deltaTime;
-		}
 		display();
 	}
 }

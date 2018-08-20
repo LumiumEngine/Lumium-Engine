@@ -14,14 +14,15 @@ namespace lumi
 			~Timer();
 			void startTime();
 			double getTime();
+			void sleepCycle();
 			void setTimeStep(int timeStep);
-			double getTimeStep();
+			double getFrameTime();
 			double getElapsedTime();
 		private:
 
 			std::chrono::time_point<std::chrono::high_resolution_clock> m_startTime;
-			std::chrono::time_point<std::chrono::high_resolution_clock> m_currentTime;
-			std::chrono::time_point<std::chrono::high_resolution_clock> m_lastTime;
+			std::chrono::time_point<std::chrono::high_resolution_clock> m_endTime;
+			double m_frameTime;
 			double m_timeStep;
 		};
 	}

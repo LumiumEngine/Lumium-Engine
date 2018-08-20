@@ -97,18 +97,3 @@ void lumi::graphics::Cube::createCube(glm::vec3 pos, int size)
 		20, 21, 22,     20, 22, 23,   // left
 	};
 }
-
-std::vector<lumi::graphics::Vertex> lumi::graphics::Cube::getVertices()
-{
-	return m_vertices;
-}
-
-std::vector<GLushort> lumi::graphics::Cube::getIndices()
-{
-	return m_indices;
-}
-
-glm::mat4 & lumi::graphics::Cube::getModel()
-{
-	return m_model;
-}

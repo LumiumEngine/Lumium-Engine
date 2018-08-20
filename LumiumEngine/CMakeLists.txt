@@ -23,6 +23,7 @@ add_library(${PROJECT_NAME} SHARED
 "${LUMI_DIR}/Graphics/Buffers.hpp" "${LUMI_DIR}/Graphics/Buffers.cpp"
 "${LUMI_DIR}/Graphics/Shapes/Cube.hpp" "${LUMI_DIR}/Graphics/Shapes/Cube.cpp"
 "${LUMI_DIR}/Graphics/Drawable.hpp"
+"${LUMI_DIR}/Graphics/Text.hpp" "${LUMI_DIR}/Graphics/Text.cpp"
 "${LUMI_DIR}/Graphics/Texture.hpp" "${LUMI_DIR}/Graphics/Texture.cpp"
 "${LUMI_DIR}/Graphics/Vertex.hpp"
 "${LUMI_DIR}/System/Camera.hpp" "${LUMI_DIR}/System/Camera.cpp"

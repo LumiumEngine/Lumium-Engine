@@ -50,15 +50,12 @@ void lumi::graphics::Texture::createTexture(std::string fileName, TextureType ty
 	glCreateTextures(static_cast<GLenum>(type), 1, &m_textureID);
 	texParms.updateParms(m_textureID);
 	int width, height, n;
-	if (type == TextureType::Tx2D)
-	{
-		stbi_set_flip_vertically_on_load(1);
-		unsigned char * imageData = stbi_load(fileName.c_str(), &width, &height, &n, 4);
-		glTextureStorage2D(m_textureID, 1, GL_RGBA8, width, height);
-		glTextureSubImage2D(m_textureID, 0, 0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, imageData);
-		stbi_image_free(imageData);
-		glGenerateTextureMipmap(m_textureID);
-	}
+	stbi_set_flip_vertically_on_load(1);
+	unsigned char * imageData = stbi_load(fileName.c_str(), &width, &height, &n, 4);
+	glTextureStorage2D(m_textureID, 1, GL_RGBA8, width, height);
+	glTextureSubImage2D(m_textureID, 0, 0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, imageData);
+	stbi_image_free(imageData);
+	glGenerateTextureMipmap(m_textureID);
 }
 
 int lumi::graphics::Texture::createTextureArray(std::string fileName, int width, int height, TextureParms texParms)
