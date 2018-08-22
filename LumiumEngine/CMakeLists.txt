@@ -38,24 +38,25 @@ add_library(${PROJECT_NAME} SHARED
 )
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
 
+set_target_properties(${PROJECT_NAME} PROPERTIES
+        ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_HOME_DIRECTORY}/${PROJECT_NAME}/lib"
+        LIBRARY_OUTPUT_DIRECTORY "${CMAKE_HOME_DIRECTORY}/${PROJECT_NAME}/lib"
+        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_HOME_DIRECTORY}/${PROJECT_NAME}/bin"
+        )
+
+
 # glad
 set(GLAD_DIR "${CMAKE_HOME_DIRECTORY}/external/glad")
 add_library("glad" "${GLAD_DIR}/src/glad.c")
 set_target_properties("glad" PROPERTIES POSITION_INDEPENDENT_CODE ON)
 target_include_directories("glad" PUBLIC "${GLAD_DIR}/include")
 
-target_include_directories(${PROJECT_NAME} PUBLIC "${SDL2_INCLUDE_DIRS}" "${GLAD_DIR}/include" "${STB_INCLUDE_DIR}" "${CMAKE_HOME_DIRECTORY}/external/glm/include")
+target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_HOME_DIRECTORY}/LumiumEngine" "${SDL2_INCLUDE_DIRS}" "${GLAD_DIR}/include" "${STB_INCLUDE_DIR}" "${CMAKE_HOME_DIRECTORY}/external/glm/include")
 if(WIN32)
 	target_link_libraries(${PROJECT_NAME} PUBLIC "${OPENGL_LIBRARIES}" SDL2::SDL2 SDL2::SDL2main "glad" "${CMAKE_DL_LIBS}")
-elseif(LINUX)
-	target_link_libraries(${PROJECT_NAME} PUBLIC "${OPENGL_LIBRARIES}" SDL2 SDL2main "glad" "${CMAKE_DL_LIBS}")
+else()
+	target_link_libraries(${PROJECT_NAME} PUBLIC "${OPENGL_LIBRARIES}" "SDL2" "SDL2main" "glad" "${CMAKE_DL_LIBS}")
 endif()
-
-
-set_target_properties(${PROJECT_NAME} PROPERTIES
-	ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_HOME_DIRECTORY}/${PROJECT_NAME}/lib"
-	RUNTIME_OUTPUT_DIRECTORY "${CMAKE_HOME_DIRECTORY}/${PROJECT_NAME}/bin"
-)
 
 install(DIRECTORY bin 
 	DESTINATION "${CMAKE_HOME_DIRECTORY}/Lumin"

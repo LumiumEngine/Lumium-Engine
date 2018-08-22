@@ -85,7 +85,7 @@ bool lumi::system::Window::createWindow(std::string title, int xPos, int yPos, i
 		SDL_Quit();
 		return false;
 	}
-
+	SDL_MaximizeWindow(m_pWindow);
 	// create the openGL context
 	m_glContext = SDL_GL_CreateContext(m_pWindow);
 	if (m_glContext == nullptr)

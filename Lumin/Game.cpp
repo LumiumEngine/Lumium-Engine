@@ -103,7 +103,7 @@ void Game::update(float time)
 	m_camera.setCameraPosition(glm::vec3(camX, 0, camZ));
 
 	auto & model = dynamic_cast<lumi::graphics::Cube*>(m_drawables.back().get())->getModel();
-	static bool test;
+	static int test;
 	if (!test)
 		model = glm::scale(model, glm::vec3(.5));
 	test++;
