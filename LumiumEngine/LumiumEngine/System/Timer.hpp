@@ -19,7 +19,7 @@ namespace lumi
 			double getFrameTime();
 			double getElapsedTime();
 		private:
-
+			std::chrono::time_point<std::chrono::high_resolution_clock> m_bootTime;
 			std::chrono::time_point<std::chrono::high_resolution_clock> m_startTime;
 			std::chrono::time_point<std::chrono::high_resolution_clock> m_endTime;
 			double m_frameTime;

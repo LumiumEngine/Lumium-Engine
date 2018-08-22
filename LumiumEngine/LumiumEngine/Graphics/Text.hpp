@@ -2,6 +2,7 @@
 #include <vector>
 #include <glm/mat4x4.hpp>
 #include <LumiumEngine/Graphics/Drawable.hpp>
+
 namespace lumi
 {
 	namespace graphics
@@ -11,6 +12,7 @@ namespace lumi
 		public:
 			Text();
 			~Text();
+
 		private:
 
 		};

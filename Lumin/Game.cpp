@@ -3,7 +3,6 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <algorithm>
 #include <iostream>
-
 #include <LumiumEngine/Graphics/Shapes/Cube.hpp>
 
 Game::Game()
@@ -42,6 +41,8 @@ void Game::setup()
 	m_shaders.addShader("Shaders/cube.frag", GL_FRAGMENT_SHADER);
 	m_shaders.compileProgram();
 
+	auto loaded = m_font.loadFont("Fonts/arial.ttf");
+	
 	m_texture.createTexture("Images/test.png");
 	
 	m_camera.setCameraCenter(glm::vec3(0, 0, 0));
@@ -58,6 +59,7 @@ void Game::run()
 	while (m_window.isOpen())
 	{
 		m_Timer.sleepCycle();
+		update(m_Timer.getFrameTime());
 		processInput();
 		display();
 	}

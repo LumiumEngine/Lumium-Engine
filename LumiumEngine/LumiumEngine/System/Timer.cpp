@@ -11,6 +11,7 @@ lumi::system::Timer::~Timer()
 
 void lumi::system::Timer::startTime()
 {
+	m_bootTime = std::chrono::high_resolution_clock::now();
 	m_startTime = std::chrono::high_resolution_clock::now();
 	m_endTime = std::chrono::high_resolution_clock::now();
 }
@@ -47,5 +48,5 @@ double lumi::system::Timer::getFrameTime()
 
 double lumi::system::Timer::getElapsedTime()
 {
-	return std::chrono::duration<double>(std::chrono::high_resolution_clock::now() - m_startTime).count();
+	return std::chrono::duration<double>(std::chrono::high_resolution_clock::now() - m_bootTime).count();
 }
