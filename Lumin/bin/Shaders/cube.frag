@@ -7,6 +7,7 @@ in vec2 TexCoords;
 out vec4 out_Color;
 
 void main()
-{ 
-    out_Color = texture(uTexture, TexCoords);
+{
+    vec4 texture = texture(uTexture, TexCoords);
+    out_Color = vec4(texture.r, texture.r, texture.r, texture.r);
 }

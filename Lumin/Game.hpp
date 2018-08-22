@@ -12,6 +12,7 @@
 #include <LumiumEngine/System/Window.hpp>
 
 #include <vector>
+#include <memory>
 
 class Game
 {
@@ -35,6 +36,6 @@ private:
 	lumi::graphics::Texture m_texture;
 	lumi::system::Shaders m_shaders;
 	lumi::system::Camera m_camera;
-	lumi::graphics::Font m_font;
+	std::shared_ptr<lumi::graphics::Font> m_font;
 	lumi::graphics::Text m_text;
 };

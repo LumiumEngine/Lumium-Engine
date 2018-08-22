@@ -31,6 +31,7 @@ namespace lumi
 			~Texture();
 
 			void createTexture(std::string fileName, TextureType type = TextureType::Tx2D, TextureParms texParms = TextureParms());
+
 			// create texture array returns the total count of images added the texture array
 			int createTextureArray(std::string fileName, int width, int height, TextureParms texParms = TextureParms());
 			void bindTexture(GLuint activeTexture = 0);

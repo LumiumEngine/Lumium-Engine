@@ -138,9 +138,9 @@ void lumi::system::Window::toggleFullScreen()
 
 }
 
-glm::vec2 lumi::system::Window::getSize()
+glm::ivec2 lumi::system::Window::getSize()
 {
 	int width, height;
 	SDL_GetWindowSize(m_pWindow, &width, &height);
-	return glm::vec2(width, height);
+	return glm::ivec2(width, height);
 }

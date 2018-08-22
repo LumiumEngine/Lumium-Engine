@@ -19,7 +19,7 @@ namespace lumi
 			void closeWindow();
 			void display();
 			void toggleFullScreen();
-			glm::vec2 getSize();
+			glm::ivec2 getSize();
 		private:
 			SDL_Window * m_pWindow;
 			SDL_GLContext m_glContext;

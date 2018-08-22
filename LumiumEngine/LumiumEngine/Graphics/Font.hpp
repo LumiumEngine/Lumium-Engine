@@ -5,6 +5,7 @@
 #include <memory>
 #include <glad/glad.h>
 #include <stb/stb_truetype.h>
+#include <LumiumEngine/Graphics/Texture.hpp>
 
 namespace lumi
 {
@@ -18,18 +19,18 @@ namespace lumi
 			float offsetY = 0;
 		};
 
-		struct FontInfo
+		struct
 		{
 			const uint32_t size = 40;
-			const uint32_t atlasWidth = 1024;
-			const uint32_t atlasHeight = 1024;
+			const uint32_t atlasWidth = 512;
+			const uint32_t atlasHeight = 512;
 			const uint32_t oversampleX = 2;
 			const uint32_t oversampleY = 2;
 			const uint32_t firstChar = ' ';
 			const uint32_t charCount = '~' - ' ';
 			std::unique_ptr<stbtt_packedchar[]> charInfo;
-			GLuint texture = 0;
-		};
+		    GLuint texture;
+		} FontInfo;
 
 		class Font
 		{
@@ -40,7 +41,6 @@ namespace lumi
 			GlyphInfo getGlyphInfo(uint32_t character, float xOffset, float yOffset);
 		private:
 			std::vector<uint8_t> readFontFile(std::string fontFile);
-			FontInfo m_fontInfo;
 		};
 	}
 };
