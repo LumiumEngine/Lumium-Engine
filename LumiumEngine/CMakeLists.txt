@@ -24,7 +24,8 @@ set(STB_INCLUDE_DIR "${CMAKE_HOME_DIRECTORY}/external/stb/include")
 
 add_library(${PROJECT_NAME} SHARED
 "${LUMI_DIR}/Graphics/Buffers.hpp" "${LUMI_DIR}/Graphics/Buffers.cpp"
-"${LUMI_DIR}/Graphics/Shapes/Cube.hpp" "${LUMI_DIR}/Graphics/Shapes/Cube.cpp"
+"${LUMI_DIR}/Graphics/Shapes/2D/Square.hpp" "${LUMI_DIR}/Graphics/Shapes/2D/Square.cpp"
+"${LUMI_DIR}/Graphics/Shapes/3D/Cube.hpp" "${LUMI_DIR}/Graphics/Shapes/3D/Cube.cpp"
 "${LUMI_DIR}/Graphics/Drawable.hpp"
 "${LUMI_DIR}/Graphics/Font.hpp" "${LUMI_DIR}/Graphics/Font.cpp"
 "${LUMI_DIR}/Graphics/Text.hpp" "${LUMI_DIR}/Graphics/Text.cpp"

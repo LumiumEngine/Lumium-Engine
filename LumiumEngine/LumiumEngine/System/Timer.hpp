@@ -18,6 +18,7 @@ namespace lumi
 			void setTimeStep(int timeStep);
 			double getFrameTime();
 			double getElapsedTime();
+			std::string getCurrentTimeLabel();
 		private:
 			std::chrono::time_point<std::chrono::high_resolution_clock> m_bootTime;
 			std::chrono::time_point<std::chrono::high_resolution_clock> m_startTime;

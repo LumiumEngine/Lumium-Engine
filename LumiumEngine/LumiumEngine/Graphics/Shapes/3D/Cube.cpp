@@ -3,13 +3,14 @@
 lumi::graphics::Cube::Cube()
 {
 	m_model = glm::mat4(1);
+	createCube();
 }
 
 lumi::graphics::Cube::~Cube()
 {
 }
 
-void lumi::graphics::Cube::createCube(glm::vec3 pos, int size)
+void lumi::graphics::Cube::createCube()
 {
 	std::vector<glm::vec3> positions =
 	{

@@ -58,6 +58,17 @@ void lumi::graphics::Texture::createTexture(std::string fileName, TextureType ty
 	glGenerateTextureMipmap(m_textureID);
 }
 
+void lumi::graphics::Texture::createFontTexture(int width, int height, uint8_t* data, TextureType type, TextureParms texParms)
+{
+	m_textureType = type;
+	glCreateTextures(static_cast<GLenum>(type), 1, &m_textureID);
+	texParms.updateParms(m_textureID);
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	glTextureStorage2D(m_textureID, 1, GL_RGB4, width, height);
+	glTextureSubImage2D(m_textureID, 0, 0, 0, width, height, GL_RED, GL_UNSIGNED_BYTE, data);
+	glGenerateTextureMipmap(m_textureID);
+}
+
 int lumi::graphics::Texture::createTextureArray(std::string fileName, int width, int height, TextureParms texParms)
 {
 	m_textureType = TextureType::Tx2DArray;

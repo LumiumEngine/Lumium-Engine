@@ -3,17 +3,16 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <algorithm>
 #include <iostream>
-#include <LumiumEngine/Graphics/Shapes/Cube.hpp>
+#include <LumiumEngine/Graphics/Shapes/2D/Square.hpp>
 #include <LumiumEngine/Graphics/Font.hpp>
 
 Game::Game()
 {
-
+	m_cameraZoom = 1.0;
 }
 
 Game::~Game()
 {
-
 }
 
 void Game::start()
@@ -23,7 +22,7 @@ void Game::start()
 		gladLoadGLLoader(SDL_GL_GetProcAddress); // load OpenGL
 		auto size = m_window.getSize();
 		glViewport(0, 0, size.x, size.y);
-		m_camera.setPerspective(45.0f, static_cast<float>(size.x) / static_cast<float>(size.y), .1f, -100.0f);
+		m_camera.setOrtho(0, size.x, 0, size.y, .01f, 10000.0f);
 		setup();
 	}
 }
@@ -37,26 +36,33 @@ void Game::setup()
 	glDepthFunc(GL_LEQUAL);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	m_font = std::make_shared<lumi::graphics::Font>();
 	auto loaded = m_font->loadFont("Fonts/arial.ttf");
 	if(loaded != 0)
 	{
 		m_text.setFont(m_font);
-		m_text.createText("OpenGL Text test");
+		m_text.createText(m_Timer.getCurrentTimeLabel());
 	}
 
-	m_buffers.createVertexBuffers(m_text.getVertices());
-	m_buffers.createElementBuffer(m_text.getIndices());
+	//m_buffers.createVertexBuffers(m_text.getVertices());
+	//m_buffers.createElementBuffer(m_text.getIndices());
 	
+	m_drawables.push_back(std::make_unique<lumi::graphics::Square>());
+	auto square = dynamic_cast<lumi::graphics::Square*>(m_drawables.back().get());
+
+	m_buffers.createVertexBuffers(square->getVertices());
+	m_buffers.createElementBuffer(square->getIndices());
+
+	m_texture.createTexture("Images/test.png");
+
 	m_shaders.addShader("Shaders/cube.vert", GL_VERTEX_SHADER);
 	m_shaders.addShader("Shaders/cube.frag", GL_FRAGMENT_SHADER);
 	m_shaders.compileProgram();
-
-	m_texture.createTexture("Images/test.png");
 	
 	m_camera.setCameraCenter(glm::vec3(0, 0, 0));
-	m_camera.setCameraPosition(glm::vec3(0, 0, 0));
+	m_camera.setCameraPosition(glm::vec3(0, 0, 1));
 
-	glClearColor(.1f, .8f, .2f, 1.0f);
+	glClearColor(0.f, 0.f, 0.f, 1.0f);
 	run();
 }
 
@@ -93,7 +99,7 @@ void Game::processInput()
 				if (size.x > 0 && size.y > 0)
 				{
 					glViewport(0, 0, static_cast<GLsizei>(size.x), static_cast<GLsizei>(size.y));
-					m_camera.setPerspective(45.0f, size.x / size.y, 0.1f, 100.0f);
+					m_camera.setOrtho(0, size.x, 0, size.y, .01f, 10000.0f);
 				}
 			}
 		}
@@ -104,9 +110,15 @@ void Game::processInput()
 
 void Game::update(float time)
 {
-	m_camera.setCameraPosition(glm::vec3(0, 0, 2500));
-
-	auto & model = m_text.getModel();
+	m_camera.setCameraPosition(glm::vec3(0, 0, 2));
+	auto & model = m_drawables.back()->getModel();
+	static bool t;
+	if (t == 0)
+	{
+		model = glm::translate(model, glm::vec3(2560 / 2, 1440 / 2, 0));
+		model = glm::scale(model, glm::vec3(150, 150, 1));
+	}
+	t++;
 	m_shaders.useProgram();
 	m_shaders.glUniformMatrix(m_shaders.getUniformLocation("Model"), GL_FALSE, m_camera.getProj() * m_camera.getView() * model);
 	m_shaders.unuseProgram();
@@ -114,17 +126,12 @@ void Game::update(float time)
 
 void Game::display()
 {
-	glClear(static_cast<unsigned int>(GL_COLOR_BUFFER_BIT) | static_cast<unsigned int>(GL_DEPTH_BUFFER_BIT));
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	m_buffers.bindBuffers();
-	glBindTextureUnit(0, 1);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glActiveTexture(GL_TEXTURE0);
 	m_shaders.useProgram();
-	glDrawElements(GL_TRIANGLES, 100, GL_UNSIGNED_SHORT, nullptr);
-	glBindTexture(GL_TEXTURE_2D, 0);
+	m_texture.bindTexture();
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, nullptr);
+	m_texture.unbindTexture();
 	m_shaders.unuseProgram();
 	m_buffers.unbindBuffers();
 	m_window.display();

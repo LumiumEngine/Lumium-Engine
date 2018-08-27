@@ -19,18 +19,29 @@ namespace lumi
 			float offsetY = 0;
 		};
 
-		struct
+		struct FontInfo
 		{
-			const uint32_t size = 40;
-			const uint32_t atlasWidth = 512;
-			const uint32_t atlasHeight = 512;
-			const uint32_t oversampleX = 2;
-			const uint32_t oversampleY = 2;
-			const uint32_t firstChar = ' ';
-			const uint32_t charCount = '~' - ' ';
+			FontInfo()
+			{
+				size = 20;
+				atlasWidth = 2048;
+				atlasHeight = 2048;
+				oversampleX = 8;
+				oversampleY = 8
+					;
+				firstChar = ' ';
+				charCount = '~' - ' ';
+				charInfo.reset();
+			};
+			uint32_t size;
+			uint32_t atlasWidth ;
+			uint32_t atlasHeight;
+			uint32_t oversampleX;
+			uint32_t oversampleY;
+			uint32_t firstChar;
+			uint32_t charCount;
 			std::unique_ptr<stbtt_packedchar[]> charInfo;
-		    GLuint texture;
-		} FontInfo;
+		};
 
 		class Font
 		{
@@ -39,8 +50,13 @@ namespace lumi
 			~Font();
 			bool loadFont(std::string fontFile);
 			GlyphInfo getGlyphInfo(uint32_t character, float xOffset, float yOffset);
+			lumi::graphics::Texture& getTexture() { return m_fontTexture; }
+			int getVerticalPosition();
 		private:
+			stbtt_fontinfo m_font;
 			std::vector<uint8_t> readFontFile(std::string fontFile);
+			FontInfo m_fontInfo;
+			lumi::graphics::Texture m_fontTexture;
 		};
 	}
 };

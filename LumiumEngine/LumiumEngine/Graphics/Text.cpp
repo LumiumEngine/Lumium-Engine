@@ -1,4 +1,5 @@
 #include "Text.hpp"
+#include <iostream>
 
 lumi::graphics::Text::Text()
 {
@@ -15,16 +16,31 @@ void lumi::graphics::Text::setFont(std::shared_ptr<lumi::graphics::Font> font)
 
 void lumi::graphics::Text::createText(std::string text)
 {
+	m_vertices.clear();
+	m_indices.clear();
+	m_text = text;
+
     lumi::graphics::Vertex vertex;
 
     GLushort lastIndex = 0;
     float offsetX = 0, offsetY = 0;
-    for (auto c : text)
+    for (auto c : m_text)
     {
+		if (c == '\n')
+		{
+			offsetY += m_font->getVerticalPosition();
+			offsetX = 0;
+			continue;
+		}
+		else if (c == '\t')
+		{
+			const auto glyphInfo = m_font->getGlyphInfo(' ', offsetX, offsetY);
+			offsetX = glyphInfo.offsetX * 4;
+			continue;
+		}
         const auto glyphInfo = m_font->getGlyphInfo(c, offsetX, offsetY);
         offsetX = glyphInfo.offsetX;
         offsetY = glyphInfo.offsetY;
-
         for(int i =  0; i < 4; i++)
         {
             vertex.Position = glyphInfo.positions[i];

@@ -12,7 +12,8 @@ namespace lumi
 		public:
 			Cube();
 			~Cube();
-			void createCube(glm::vec3 pos, int size = 1);
+		private:
+			void createCube();
 		};
 	}
 }

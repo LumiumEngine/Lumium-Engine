@@ -50,3 +50,9 @@ double lumi::system::Timer::getElapsedTime()
 {
 	return std::chrono::duration<double>(std::chrono::high_resolution_clock::now() - m_bootTime).count();
 }
+
+std::string lumi::system::Timer::getCurrentTimeLabel()
+{
+	auto date = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+	return std::string(std::ctime(&date));
+}

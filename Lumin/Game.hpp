@@ -38,4 +38,6 @@ private:
 	lumi::system::Camera m_camera;
 	std::shared_ptr<lumi::graphics::Font> m_font;
 	lumi::graphics::Text m_text;
+
+	double m_cameraZoom;
 };
